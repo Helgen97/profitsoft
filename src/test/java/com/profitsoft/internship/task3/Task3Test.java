@@ -20,12 +20,12 @@ public class Task3Test {
      */
     @Test
     public void testSortShapesByVolumeInAscendingOrder() {
-        List<Shape> expResult = new ArrayList<>();
-        expResult.add(new Ball(1));
-        expResult.add(new Cylinder(2, 1));
-        expResult.add(new Cube(3));
-        expResult.add(new Cylinder(5, 2));
-        expResult.add(new Ball(4));
+        List<Shape> expected = new ArrayList<>();
+        expected.add(new Ball(1));
+        expected.add(new Cylinder(2, 1));
+        expected.add(new Cube(3));
+        expected.add(new Cylinder(5, 2));
+        expected.add(new Ball(4));
 
         List<Shape> listToSort = new ArrayList<>();
         listToSort.add(new Cylinder(5, 2));
@@ -33,14 +33,27 @@ public class Task3Test {
         listToSort.add(new Cube(3));
         listToSort.add(new Ball(1));
         listToSort.add(new Ball(4));
+        
+        List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(listToSort);
 
-        assertEquals(expResult.toString(), task3.sortShapesByVolumeInAscendingOrder(listToSort).toString());
+        assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
-    public void testSortShapesByVolumeInAscendingOrderPassingNullOrEmptyList() {
-        assertEquals(Collections.EMPTY_LIST, task3.sortShapesByVolumeInAscendingOrder(null));
-        assertEquals(Collections.EMPTY_LIST, task3.sortShapesByVolumeInAscendingOrder(Collections.EMPTY_LIST));
+    public void testSortShapesByVolumeInAscendingOrdeTakesEmptyList() {
+        List<Shape> expected = Collections.EMPTY_LIST;
+        
+        List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(Collections.EMPTY_LIST);
+        
+        assertEquals(expected, actual);
     }
+    
+    @Test
+    public void testSortShapesByVolumeInAscendingOrdeTakesNull() {
+        List<Shape> expected = Collections.EMPTY_LIST;
+        
+        List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(null);
 
+        assertEquals(expected, actual);
+    }
 }

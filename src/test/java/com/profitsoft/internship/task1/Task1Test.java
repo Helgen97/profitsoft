@@ -14,12 +14,36 @@ public class Task1Test {
 
     @Test
     public void testSortArrayOfIntegerInDescendingOrderAndBeingPositive() {
-        System.out.println("Testing sorting");
+        int[] expected = new int[]{5, 3, 2, 0};
+        int[] actual = task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{-1, 2, 3, 0, -9, 5});
 
-        assertArrayEquals(new int[]{5, 3, 2, 0}, task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{-1, 2, 3, 0, -9, 5}));
-        assertArrayEquals(new int[]{}, task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{-1, -2, -4, -15, -2}));
-        assertArrayEquals(new int[]{}, task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(null));
-        assertArrayEquals(new int[]{}, task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{}));
+        assertArrayEquals(expected, actual);
     }
+    
+    @Test
+    public void testSortArrayOfIntegerInDescendingOrderAndBeingPositiveTakesNegativeArray() {
+        int[] expected = new int[]{};
+        int[] actual = task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{-1, -2, -3, -9, -5});
+
+        assertArrayEquals(expected, actual);
+    }
+    
+    @Test
+    public void testSortArrayOfIntegerInDescendingOrderAndBeingPositiveTakesEmptyArray() {
+        int[] expected = new int[]{};
+        int[] actual = task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(new int[]{});
+
+        assertArrayEquals(expected, actual);
+    }
+    
+    @Test
+    public void testSortArrayOfIntegerInDescendingOrderAndBeingPositiveTakesNull() {
+        int[] expected = new int[]{};
+        int[] actual = task1.sortArrayOfIntegerInDescendingOrderAndBeingPositive(null);
+
+        assertArrayEquals(expected, actual);
+    }
+    
+    
 
 }
