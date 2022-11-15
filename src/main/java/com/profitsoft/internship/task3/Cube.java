@@ -1,11 +1,10 @@
 package com.profitsoft.internship.task3;
 
 /**
- *
  * @author Dmytro Donchenko
  */
 public class Cube implements Shape {
-    
+
     private final double length;
 
     public Cube(double length) {
@@ -14,17 +13,16 @@ public class Cube implements Shape {
         }
         this.length = length;
     }
-    
+
     @Override
-    public double volume() {
+    public double getVolume() {
         return Math.pow(length, 3);
     }
 
     @Override
     public String toString() {
-        return volume() + "";
+        return getVolume() + "";
     }
-    
-    
+
 
 }

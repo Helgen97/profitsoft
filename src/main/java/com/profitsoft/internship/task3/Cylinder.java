@@ -1,7 +1,6 @@
 package com.profitsoft.internship.task3;
 
 /**
- *
  * @author Dmytro Donchenko
  */
 public class Cylinder implements Shape {
@@ -17,15 +16,14 @@ public class Cylinder implements Shape {
     }
 
     @Override
-    public double volume() {
+    public double getVolume() {
         return Math.PI * Math.pow(radius, 2) * height;
     }
 
     @Override
     public String toString() {
-        return volume() + "";
+        return getVolume() + "";
     }
-    
-    
+
 
 }

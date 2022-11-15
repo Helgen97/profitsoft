@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author Dmytro Donchenko
  */
 public class Task3 {
@@ -17,13 +16,13 @@ public class Task3 {
      * циліндр). Написати unit-тести для методу.
      */
     public List<Shape> sortShapesByVolumeInAscendingOrder(List<Shape> shapes) {
-        
+
         if (shapes == null || shapes.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
 
         return shapes.stream()
-                .sorted(Comparator.comparingDouble(shape -> shape.volume()))
+                .sorted(Comparator.comparingDouble(shape -> shape.getVolume()))
                 .collect(Collectors.toList());
 
     }

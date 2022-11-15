@@ -1,14 +1,14 @@
 package com.profitsoft.internship.task3;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author Dmytro Donchenkp
  */
 public class Task3Test {
@@ -33,7 +33,7 @@ public class Task3Test {
         listToSort.add(new Cube(3));
         listToSort.add(new Ball(1));
         listToSort.add(new Ball(4));
-        
+
         List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(listToSort);
 
         assertEquals(expected.toString(), actual.toString());
@@ -42,16 +42,16 @@ public class Task3Test {
     @Test
     public void testSortShapesByVolumeInAscendingOrdeTakesEmptyList() {
         List<Shape> expected = Collections.EMPTY_LIST;
-        
+
         List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(Collections.EMPTY_LIST);
-        
+
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testSortShapesByVolumeInAscendingOrdeTakesNull() {
         List<Shape> expected = Collections.EMPTY_LIST;
-        
+
         List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(null);
 
         assertEquals(expected, actual);
