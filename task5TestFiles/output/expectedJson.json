@@ -1,0 +1,16 @@
+[ {
+  "violationType" : "DRIVING_WITHOUT_LICENCE",
+  "fineAmountSum" : 4500.0
+}, {
+  "violationType" : "DRUNK_DRIVER",
+  "fineAmountSum" : 3000.0
+}, {
+  "violationType" : "SPEEDING",
+  "fineAmountSum" : 2040.0
+}, {
+  "violationType" : "DRIVING_ON_RED_LIGHT",
+  "fineAmountSum" : 1800.0
+}, {
+  "violationType" : "CAR_WITHOUT_INSURANCE",
+  "fineAmountSum" : 1500.0
+} ]

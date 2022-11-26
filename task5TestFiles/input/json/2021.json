@@ -1,0 +1,51 @@
+[
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "SPEEDING",
+    "fine_amount": 340.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "DRUNK_DRIVER",
+    "fine_amount": 540.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "CAR_WITHOUT_INSURANCE",
+    "fine_amount": 240.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "DRIVING_WITHOUT_LICENCE",
+    "fine_amount": 1040.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "SPEEDING",
+    "fine_amount": 340.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "DRIVING_ON_RED_LIGHT",
+    "fine_amount": 640.00
+  },
+  {
+    "date_time": "2021-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "DRUNK_DRIVER",
+    "fine_amount": 240.00
+  }
+]

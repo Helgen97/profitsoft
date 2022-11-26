@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<statistic>
+    <violation>
+        <violationType>DRIVING_WITHOUT_LICENCE</violationType>
+        <fineAmountSum>3120.0</fineAmountSum>
+    </violation>
+    <violation>
+        <violationType>DRUNK_DRIVER</violationType>
+        <fineAmountSum>2140.0</fineAmountSum>
+    </violation>
+    <violation>
+        <violationType>SPEEDING</violationType>
+        <fineAmountSum>2040.0</fineAmountSum>
+    </violation>
+    <violation>
+        <violationType>DRIVING_ON_RED_LIGHT</violationType>
+        <fineAmountSum>1920.0</fineAmountSum>
+    </violation>
+    <violation>
+        <violationType>CAR_WITHOUT_INSURANCE</violationType>
+        <fineAmountSum>720.0</fineAmountSum>
+    </violation>
+</statistic>
