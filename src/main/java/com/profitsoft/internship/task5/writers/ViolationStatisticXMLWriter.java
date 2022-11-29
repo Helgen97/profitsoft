@@ -12,6 +12,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -25,10 +26,12 @@ public class ViolationStatisticXMLWriter {
     private static Document violationStatisticXml;
 
     public static void createXml(Map<ViolationType, Double> statistic, String outputPath) {
+        String outputFile = outputPath + (outputPath.endsWith(File.separator) ? "statistic.xml" : File.separator + "statistic.xml");
+
         prepareWriter();
         generateViolationXml(statistic);
 
-        try (var outputStream = new FileOutputStream(outputPath);
+        try (var outputStream = new FileOutputStream(outputFile);
              var bufferedOutputStream = new BufferedOutputStream(outputStream)) {
 
             writeXml(bufferedOutputStream);

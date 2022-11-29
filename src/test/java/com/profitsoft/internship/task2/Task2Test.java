@@ -15,7 +15,7 @@ public class Task2Test {
     Task2 task2 = new Task2();
 
     @Test
-    public void testTopFiveUsedHashTags() {
+    public void topFiveUsedHashTags_worksFine() {
         String expected = "{#tag=3, #a=2, #top=1, #works=1, #best=1}";
 
         String actual = task2.topFiveUsedHashTags(Arrays.asList(
@@ -26,7 +26,7 @@ public class Task2Test {
     }
 
     @Test
-    public void testTopFiveUsedHashTagsTakesEmptyList() {
+    public void topFiveUsedHashTags_takesEmptyList() {
         Map<String, Integer> expected = Collections.EMPTY_MAP;
 
         Map<String, Integer> actual = task2.topFiveUsedHashTags(Collections.EMPTY_LIST);
@@ -35,7 +35,7 @@ public class Task2Test {
     }
 
     @Test
-    public void testTopFiveUsedHashTagsTakesNull() {
+    public void topFiveUsedHashTags_takesNull() {
         Map<String, Integer> expected = Collections.EMPTY_MAP;
 
         Map<String, Integer> actual = task2.topFiveUsedHashTags(null);

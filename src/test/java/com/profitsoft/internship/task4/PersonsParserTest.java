@@ -16,14 +16,14 @@ public class PersonsParserTest {
     private final PersonsParser parser = new PersonsParser();
 
     @Test
-    public void parseAndWriteChangedFileWorksFine() throws IOException {
-        File inputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task4TestFiles/input/persons.xml")).getFile());
-        String outputDirectory = Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task4TestFiles/output/")).getFile();
+    public void parseAndWriteChangedFile_WorksFine() throws IOException {
+        File inputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/input/persons.xml")).getFile());
+        String outputDirectory = Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/")).getFile();
 
         parser.parseAndWriteChangedFile(inputFile, outputDirectory);
 
-        File expectedOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task4TestFiles/output/expectedOutput.xml")).getFile());
-        File actualOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task4TestFiles/output/persons.xml")).getFile());
+        File expectedOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/expectedOutput.xml")).getFile());
+        File actualOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/persons.xml")).getFile());
 
         FileInputStream fileInputStream = new FileInputStream(actualOutputFile);
         DataInputStream actualOutput = new DataInputStream(fileInputStream);
@@ -38,17 +38,19 @@ public class PersonsParserTest {
     }
 
     @Test
-    public void parseAndWriteChangedFileNullFileInput() {
+    public void parseAndWriteChangedFile_NullFileInput() {
         assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(null, "task4TestFiles/output/"));
     }
 
     @Test
-    public void parseAndWriteChangedFileNullOutputPathInput() {
+    public void parseAndWriteChangedFile_NullOutputPathInput() {
         assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(new File("task4TestFiles/input/persons.xml"), null));
     }
 
     @Test
-    public void parseAndWriteChangedFileFileIsDirectoryInput() {
-        assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(new File("task4TestFiles/input/"), "task4TestFiles/output/"));
+    public void parseAndWriteChangedFile_FileIsDirectoryInput() {
+        File inputDirectory = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/input/")).getFile());
+
+        assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(inputDirectory, "task4TestFiles/output/"));
     }
 }

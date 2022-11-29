@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.profitsoft.internship.task5.model.ViolationType;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -15,7 +16,9 @@ public class ViolationStatisticJsonWriter {
     private static final JsonFactory jsonFactory = new JsonFactory();
 
     public static void createJson(Map<ViolationType, Double> statistic, String outputPath) {
-        try (var outputStream = new FileOutputStream(outputPath);
+        String outputFile = outputPath + (outputPath.endsWith(File.separator) ? "statistic.json" : File.separator + "statistic.json");
+
+        try (var outputStream = new FileOutputStream(outputFile);
              var bufferedOutputStream = new BufferedOutputStream(outputStream);
              var jsonGenerator = jsonFactory.createGenerator(bufferedOutputStream, JsonEncoding.UTF8)) {
             jsonGenerator.useDefaultPrettyPrinter();

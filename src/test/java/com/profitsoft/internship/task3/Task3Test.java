@@ -19,7 +19,7 @@ public class Task3Test {
      * Test of sortShapesByVolumeInAscendingOrder method, of class Task3.
      */
     @Test
-    public void testSortShapesByVolumeInAscendingOrder() {
+    public void sortShapesByVolumeInAscendingOrder_worksFine() {
         List<Shape> expected = new ArrayList<>();
         expected.add(new Ball(1));
         expected.add(new Cylinder(2, 1));
@@ -40,7 +40,7 @@ public class Task3Test {
     }
 
     @Test
-    public void testSortShapesByVolumeInAscendingOrdeTakesEmptyList() {
+    public void sortShapesByVolumeInAscendingOrder_takesEmptyList() {
         List<Shape> expected = Collections.EMPTY_LIST;
 
         List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(Collections.EMPTY_LIST);
@@ -49,7 +49,7 @@ public class Task3Test {
     }
 
     @Test
-    public void testSortShapesByVolumeInAscendingOrdeTakesNull() {
+    public void sortShapesByVolumeInAscendingOrder_takesNull() {
         List<Shape> expected = Collections.EMPTY_LIST;
 
         List<Shape> actual = task3.sortShapesByVolumeInAscendingOrder(null);
