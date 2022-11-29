@@ -45,6 +45,9 @@ public class ViolationStatisticGenerator {
     }
 
     public void collectAndGenerateStatistic(String pathToFolder, String outputPath) {
+        if (pathToFolder == null || outputPath == null || pathToFolder.isEmpty() || outputPath.isEmpty()) {
+            throw new IllegalArgumentException("Bad arguments! Please verify paths arguments!");
+        }
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFolder))) {
             paths
                     .filter(file -> !Files.isDirectory(file))

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class ViolationStatisticGeneratorTest {
 
@@ -14,6 +15,7 @@ public class ViolationStatisticGeneratorTest {
 
     @Test
     public void collectAndGenerateStatisticJsonInputFiles() throws IOException {
+
         generator.collectAndGenerateStatistic("task5TestFiles/input/json", "task5TestFiles/output/statistic.xml");
         FileInputStream fileInputStream = new FileInputStream("task5TestFiles/output/statistic.xml");
         DataInputStream actualOutput = new DataInputStream(fileInputStream);
@@ -40,5 +42,25 @@ public class ViolationStatisticGeneratorTest {
         byte expected = expectedOutputData.readByte();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void collectAndGenerateStatisticXmlNullPathToFolder() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic(null, "task5TestFiles/output/statistic.json"));
+    }
+
+    @Test
+    public void collectAndGenerateStatisticXmlEmptyPathToFolder() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("", "task5TestFiles/output/statistic.json"));
+    }
+
+    @Test
+    public void collectAndGenerateStatisticXmlNullOutputPath() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("task5TestFiles/input/xml", null));
+    }
+
+    @Test
+    public void collectAndGenerateStatisticXmlEmptyOutputPath() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("task5TestFiles/input/xml", ""));
     }
 }

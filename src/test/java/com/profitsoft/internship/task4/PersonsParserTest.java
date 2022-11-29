@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class PersonsParserTest {
 
@@ -27,5 +28,20 @@ public class PersonsParserTest {
         byte expected = expectedOutputData.readByte();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void parseAndWriteChangedFileNullFileInput() {
+        assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(null, "task4TestFiles/output/"));
+    }
+
+    @Test
+    public void parseAndWriteChangedFileNullOutputPathInput() {
+        assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(new File("task4TestFiles/input/persons.xml"), null));
+    }
+
+    @Test
+    public void parseAndWriteChangedFileFileIsDirectoryInput() {
+        assertThrows(IllegalArgumentException.class, () -> parser.parseAndWriteChangedFile(new File("task4TestFiles/input/"), "task4TestFiles/output/"));
     }
 }

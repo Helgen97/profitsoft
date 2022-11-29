@@ -15,12 +15,16 @@ import java.util.regex.Pattern;
  */
 public class PersonsParser {
 
-    private final Pattern namePattern = Pattern.compile("(?<!sur)name\\s?=\\s?\"(?<name>\\S+)\"", Pattern.MULTILINE | Pattern.COMMENTS);
-    private final Pattern surnamePattern = Pattern.compile("surname\\s?=\\s?\"(?<surname>\\S+)\"", Pattern.MULTILINE | Pattern.COMMENTS);
+    private final Pattern namePattern = Pattern.compile("\\s?(?<!sur)name\\s?=\\s?\"(?<name>\\S+)\"", Pattern.MULTILINE | Pattern.COMMENTS);
+    private final Pattern surnamePattern = Pattern.compile("\\s?surname\\s?=\\s?\"(?<surname>\\S+)\"", Pattern.MULTILINE | Pattern.COMMENTS);
 
     public void parseAndWriteChangedFile(File inputFile, String outputPath) {
+        if (inputFile == null || outputPath == null || inputFile.isDirectory()) {
+            throw new IllegalArgumentException("Wrong arguments! Verify arguments!");
+        }
+
         try (var fileInputStream = new FileInputStream(inputFile);
-             var scanner = new Scanner(fileInputStream, StandardCharsets.UTF_8).useDelimiter("/>");
+             var scanner = new Scanner(fileInputStream, StandardCharsets.UTF_8).useDelimiter("(?<=<)");
              var fileWriter = new FileWriter(outputPath + inputFile.getName(), true);
              var bufferedWriter = new BufferedWriter(fileWriter)
         ) {
@@ -28,11 +32,7 @@ public class PersonsParser {
             while (scanner.hasNext()) {
                 String line = replaceNameTagsToFullName(scanner.next());
 
-                if (scanner.hasNext()) {
-                    bufferedWriter.write(line + "/>");
-                } else {
-                    bufferedWriter.write(line);
-                }
+                bufferedWriter.write(line);
             }
 
         } catch (IOException exception) {
@@ -55,9 +55,8 @@ public class PersonsParser {
 
         if (nameMatcher.find()) {
             name = nameMatcher.group("name");
-            newline = newline.replaceAll(namePattern.toString(), String.format("name=\"%s %s\"", name, surname));
+            newline = newline.replaceAll(namePattern.toString(), String.format(" name=\"%s %s\"", name, surname));
         }
-
         return newline;
     }
 }
