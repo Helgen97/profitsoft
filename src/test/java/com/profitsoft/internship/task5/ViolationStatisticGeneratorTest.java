@@ -1,10 +1,13 @@
 package com.profitsoft.internship.task5;
 
+import com.profitsoft.internship.task4.PersonsParserTest;
 import org.junit.Test;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -16,11 +19,18 @@ public class ViolationStatisticGeneratorTest {
     @Test
     public void collectAndGenerateStatisticJsonInputFiles() throws IOException {
 
-        generator.collectAndGenerateStatistic("task5TestFiles/input/json", "task5TestFiles/output/statistic.xml");
-        FileInputStream fileInputStream = new FileInputStream("task5TestFiles/output/statistic.xml");
+        String pathToFolder = Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/input/json")).getFile();
+        String outputPath = Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.xml")).getFile();
+
+        generator.collectAndGenerateStatistic(pathToFolder, outputPath);
+
+        File expectedOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/expectedXml.xml")).getFile());
+        File actualOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.xml")).getFile());
+
+        FileInputStream fileInputStream = new FileInputStream(actualOutputFile);
         DataInputStream actualOutput = new DataInputStream(fileInputStream);
 
-        FileInputStream fileInputStream1 = new FileInputStream("task5TestFiles/output/expectedXml.xml");
+        FileInputStream fileInputStream1 = new FileInputStream(expectedOutputFile);
         DataInputStream expectedOutputData = new DataInputStream(fileInputStream1);
 
         byte actual = actualOutput.readByte();
@@ -31,11 +41,18 @@ public class ViolationStatisticGeneratorTest {
 
     @Test
     public void collectAndGenerateStatisticXmlInputFiles() throws IOException {
-        generator.collectAndGenerateStatistic("task5TestFiles/input/xml", "task5TestFiles/output/statistic.json");
-        FileInputStream fileInputStream = new FileInputStream("task5TestFiles/output/statistic.json");
+        String pathToFolder = Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/input/xml")).getFile();
+        String outputPath = Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.json")).getFile();
+
+        generator.collectAndGenerateStatistic(pathToFolder, outputPath);
+
+        File expectedOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.json")).getFile());
+        File actualOutputFile = new File(Objects.requireNonNull(PersonsParserTest.class.getClassLoader().getResource("task5TestFiles/output/expectedJson.json")).getFile());
+
+        FileInputStream fileInputStream = new FileInputStream(actualOutputFile);
         DataInputStream actualOutput = new DataInputStream(fileInputStream);
 
-        FileInputStream fileInputStream1 = new FileInputStream("task5TestFiles/output/expectedJson.json");
+        FileInputStream fileInputStream1 = new FileInputStream(expectedOutputFile);
         DataInputStream expectedOutputData = new DataInputStream(fileInputStream1);
 
         byte actual = actualOutput.readByte();
