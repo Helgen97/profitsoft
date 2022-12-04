@@ -21,11 +21,11 @@ public class ViolationStatisticGeneratorTest {
         URL xmlStatisticUrl = ViolationStatisticGeneratorTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.xml");
         URL jsonStatisticUrl = ViolationStatisticGeneratorTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.json");
 
-        if(xmlStatisticUrl != null) {
+        if (xmlStatisticUrl != null) {
             Files.deleteIfExists(Path.of(xmlStatisticUrl.getPath()));
         }
 
-        if(jsonStatisticUrl != null) {
+        if (jsonStatisticUrl != null) {
             Files.deleteIfExists(Path.of(jsonStatisticUrl.getPath()));
         }
     }

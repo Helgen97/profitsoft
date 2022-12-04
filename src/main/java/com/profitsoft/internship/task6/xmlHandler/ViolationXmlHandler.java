@@ -10,8 +10,8 @@ import java.util.Map;
 public class ViolationXmlHandler extends DefaultHandler {
 
     private String tagValue = null;
-
     private final Violation violation;
+
     private final Map<ViolationType, Double> statistic;
 
     public ViolationXmlHandler() {

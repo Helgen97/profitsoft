@@ -8,24 +8,54 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class ViolationStatisticAsyncGeneratorTest {
 
-    private final ViolationStatisticAsyncGenerator generator = new ViolationStatisticAsyncGenerator(4);
+    private final ViolationStatisticAsyncGenerator generator = new ViolationStatisticAsyncGenerator(8);
 
     @BeforeClass
     public static void deleteCreatedStatistic() throws IOException {
         URL jsonStatisticUrl = ViolationStatisticGeneratorTest.class.getClassLoader().getResource("task6TestFiles/output/statistic.json");
 
-        if(jsonStatisticUrl != null) {
+        if (jsonStatisticUrl != null) {
             Files.deleteIfExists(Path.of(jsonStatisticUrl.getPath()));
         }
     }
 
     @Test
-    public void collectAndGenerateStatistic_worksFine() {
+    public void collectAndGenerateStatistic_worksFine() throws IOException {
+        String pathToFolder = Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/input/")).getFile();
+        String outputPath = Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/output/")).getFile();
 
+        generator.collectAndGenerateStatistic(pathToFolder, outputPath);
+
+        Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/output/expectedOutput.json")).getPath());
+        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/output/statistic.json")).getPath());
+
+        assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
+    }
+
+    @Test
+    public void collectAndGenerateStatistic_XmlNullPathToFolder() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic(null, "task6TestFiles/output/"));
+    }
+
+    @Test
+    public void collectAndGenerateStatistic_XmlEmptyPathToFolder() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("", "task6TestFiles/output/"));
+    }
+
+    @Test
+    public void collectAndGenerateStatistic_XmlNullOutputPath() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("task6TestFiles/input/", null));
+    }
+
+    @Test
+    public void collectAndGenerateStatistic_XmlEmptyOutputPath() {
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("task6TestFiles/input/", ""));
     }
 }
