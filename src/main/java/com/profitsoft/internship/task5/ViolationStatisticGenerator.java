@@ -71,8 +71,14 @@ public class ViolationStatisticGenerator {
     }
 
     private void combineMapFromParsers() {
-        statistic.putAll(xmlParser.getStatistic());
-        statistic.putAll(jsonParser.getStatistic());
+        mergeMap(xmlParser.getStatistic());
+        mergeMap(jsonParser.getStatistic());
+    }
+
+    private void mergeMap(Map<ViolationType, Double> newStatistic) {
+        newStatistic.forEach(
+                ((violationType, fineAmount) -> statistic.merge(
+                        violationType, fineAmount, (oldValue, newValue) -> oldValue += newValue)));
     }
 
     private void sortMapByFineAmount() {

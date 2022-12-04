@@ -51,20 +51,20 @@ public class ViolationStatisticGeneratorTest {
 
         generator.collectAndGenerateStatistic(pathToFolder, outputPath);
 
-        Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.json")).getPath());
-        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedJson.json")).getPath());
+        Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedJson.json")).getPath());
+        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.json")).getPath());
 
         assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
     }
 
     @Test
     public void collectAndGenerateStatistic_XmlNullPathToFolder() {
-        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic(null, "task5TestFiles/output/statistic.json"));
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic(null, "task5TestFiles/output/expectedOutput.json"));
     }
 
     @Test
     public void collectAndGenerateStatistic_XmlEmptyPathToFolder() {
-        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("", "task5TestFiles/output/statistic.json"));
+        assertThrows(IllegalArgumentException.class, () -> generator.collectAndGenerateStatistic("", "task5TestFiles/output/expectedOutput.json"));
     }
 
     @Test

@@ -33,7 +33,7 @@ public class PersonsParserTest {
         parser.parseAndWriteChangedFile(inputFile, outputDirectory);
 
         Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/expectedOutput.xml")).getPath());
-        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/expectedOutput.xml")).getPath());
+        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task4TestFiles/output/persons.xml")).getPath());
 
         assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
     }
