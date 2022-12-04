@@ -55,7 +55,7 @@ public class PersonsParser {
 
         if (nameMatcher.find()) {
             name = nameMatcher.group("name");
-            newline = newline.replaceAll(namePattern.toString(), String.format(" name=\"%s %s\"", name, surname));
+            newline = newline.replaceAll(namePattern.toString(), String.format(" name=\"%s %s\"", name, surname).stripTrailing());
         }
         return newline;
     }

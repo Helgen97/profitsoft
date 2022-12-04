@@ -40,8 +40,8 @@ public class ViolationStatisticGenerator {
 
     public ViolationStatisticGenerator() {
         this.statistic = new HashMap<>();
-        this.xmlParser = new ViolationXMLParser(statistic);
-        this.jsonParser = new ViolationJsonParser(statistic);
+        this.xmlParser = new ViolationXMLParser();
+        this.jsonParser = new ViolationJsonParser();
     }
 
     public void collectAndGenerateStatistic(String pathToFolder, String outputPath) {
@@ -62,6 +62,7 @@ public class ViolationStatisticGenerator {
                         }
                     });
 
+            combineMapFromParsers();
             sortMapByFineAmount();
             generateStatistic(outputPath);
         } catch (IOException e) {
@@ -69,17 +70,22 @@ public class ViolationStatisticGenerator {
         }
     }
 
-    private void generateStatistic(String outputPath) {
-        switch (firstFileType) {
-            case "xml" -> ViolationStatisticJsonWriter.createJson(statistic, outputPath);
-            case "json" -> ViolationStatisticXMLWriter.createXml(statistic, outputPath);
-        }
+    private void combineMapFromParsers() {
+        statistic.putAll(xmlParser.getStatistic());
+        statistic.putAll(jsonParser.getStatistic());
     }
 
     private void sortMapByFineAmount() {
         statistic = statistic.entrySet().stream()
                 .sorted(Map.Entry.<ViolationType, Double>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (i1, i2) -> i1, LinkedHashMap::new));
+    }
+
+    private void generateStatistic(String outputPath) {
+        switch (firstFileType) {
+            case "xml" -> ViolationStatisticJsonWriter.createJson(statistic, outputPath);
+            case "json" -> ViolationStatisticXMLWriter.createXml(statistic, outputPath);
+        }
     }
 
 }

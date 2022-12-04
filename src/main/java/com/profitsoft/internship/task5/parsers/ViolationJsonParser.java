@@ -8,6 +8,7 @@ import com.profitsoft.internship.task5.model.ViolationType;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ViolationJsonParser {
@@ -16,10 +17,10 @@ public class ViolationJsonParser {
     private final Violation violation;
     private final Map<ViolationType, Double> statistic;
 
-    public ViolationJsonParser(Map<ViolationType, Double> statistic) {
+    public ViolationJsonParser() {
         this.jsonFactory = new JsonFactory();
         this.violation = new Violation();
-        this.statistic = statistic;
+        this.statistic = new HashMap<>();
     }
 
     public void parseViolationJson(Path path) {
@@ -49,6 +50,10 @@ public class ViolationJsonParser {
             statistic.computeIfPresent(violation.getType(), (key, value) -> value += violation.getFineAmount());
             statistic.putIfAbsent(violation.getType(), violation.getFineAmount());
         }
+    }
+
+    public Map<ViolationType, Double> getStatistic() {
+        return statistic;
     }
 }
 

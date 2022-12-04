@@ -10,20 +10,21 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ViolationXMLParser extends DefaultHandler {
 
     private final SAXParserFactory parserFactory;
-    private String tagValue = null;
+    private volatile String tagValue = null;
 
     private final Violation violation;
     private final Map<ViolationType, Double> statistic;
 
-    public ViolationXMLParser(Map<ViolationType, Double> statistic) {
+    public ViolationXMLParser() {
         this.parserFactory = SAXParserFactory.newInstance();
         this.violation = new Violation();
-        this.statistic = statistic;
+        this.statistic = new HashMap<>();
     }
 
     public void parseViolationXML(Path path) {
@@ -50,5 +51,9 @@ public class ViolationXMLParser extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
         tagValue = String.copyValueOf(ch, start, length).trim();
+    }
+
+    public Map<ViolationType, Double> getStatistic() {
+        return statistic;
     }
 }

@@ -1,11 +1,12 @@
 package com.profitsoft.internship.task5;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +16,20 @@ public class ViolationStatisticGeneratorTest {
 
     private final ViolationStatisticGenerator generator = new ViolationStatisticGenerator();
 
+    @BeforeClass
+    public static void deleteCreatedStatistic() throws IOException {
+        URL xmlStatisticUrl = ViolationStatisticGeneratorTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.xml");
+        URL jsonStatisticUrl = ViolationStatisticGeneratorTest.class.getClassLoader().getResource("task5TestFiles/output/statistic.json");
+
+        if(xmlStatisticUrl != null) {
+            Files.deleteIfExists(Path.of(xmlStatisticUrl.getPath()));
+        }
+
+        if(jsonStatisticUrl != null) {
+            Files.deleteIfExists(Path.of(jsonStatisticUrl.getPath()));
+        }
+    }
+
     @Test
     public void collectAndGenerateStatistic_JsonInputFiles() throws IOException {
 
@@ -23,19 +38,10 @@ public class ViolationStatisticGeneratorTest {
 
         generator.collectAndGenerateStatistic(pathToFolder, outputPath);
 
-        File expectedOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedXml.xml")).getFile());
-        File actualOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.xml")).getFile());
+        Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedXml.xml")).getPath());
+        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.xml")).getPath());
 
-        FileInputStream fileInputStream = new FileInputStream(actualOutputFile);
-        DataInputStream actualOutput = new DataInputStream(fileInputStream);
-
-        FileInputStream fileInputStream1 = new FileInputStream(expectedOutputFile);
-        DataInputStream expectedOutputData = new DataInputStream(fileInputStream1);
-
-        byte actual = actualOutput.readByte();
-        byte expected = expectedOutputData.readByte();
-
-        assertEquals(expected, actual);
+        assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
     }
 
     @Test
@@ -45,19 +51,10 @@ public class ViolationStatisticGeneratorTest {
 
         generator.collectAndGenerateStatistic(pathToFolder, outputPath);
 
-        File expectedOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.json")).getFile());
-        File actualOutputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedJson.json")).getFile());
+        Path expectedOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/statistic.json")).getPath());
+        Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task5TestFiles/output/expectedJson.json")).getPath());
 
-        FileInputStream fileInputStream = new FileInputStream(actualOutputFile);
-        DataInputStream actualOutput = new DataInputStream(fileInputStream);
-
-        FileInputStream fileInputStream1 = new FileInputStream(expectedOutputFile);
-        DataInputStream expectedOutputData = new DataInputStream(fileInputStream1);
-
-        byte actual = actualOutput.readByte();
-        byte expected = expectedOutputData.readByte();
-
-        assertEquals(expected, actual);
+        assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
     }
 
     @Test
