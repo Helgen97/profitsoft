@@ -1,5 +1,6 @@
 package com.profitsoft.internship.task6;
 
+import com.profitsoft.internship.task5.ViolationStatisticGenerator;
 import com.profitsoft.internship.task5.ViolationStatisticGeneratorTest;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,6 +38,28 @@ public class ViolationStatisticAsyncGeneratorTest {
         Path actualOutputFile = Path.of(Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/output/statistic.json")).getPath());
 
         assertEquals(-1, Files.mismatch(expectedOutputFile, actualOutputFile));
+    }
+
+    @Test
+    public void collectAndGenerateStatistic_SpeedTest() {
+        String pathToFolder = Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/input/")).getFile();
+        String outputPath = Objects.requireNonNull(getClass().getClassLoader().getResource("task6TestFiles/output/")).getFile();
+
+        long oneThread = System.currentTimeMillis();
+        new ViolationStatisticGenerator().collectAndGenerateStatistic(pathToFolder, outputPath);
+        System.out.println("One thread: " + (System.currentTimeMillis() - oneThread));
+
+        long twoThreads = System.currentTimeMillis();
+        new ViolationStatisticAsyncGenerator(2).collectAndGenerateStatistic(pathToFolder, outputPath);
+        System.out.println("Two threads: " + (System.currentTimeMillis() - twoThreads));
+
+        long fourThreads = System.currentTimeMillis();
+        new ViolationStatisticAsyncGenerator(4).collectAndGenerateStatistic(pathToFolder, outputPath);
+        System.out.println("Four threads: " + (System.currentTimeMillis() - fourThreads));
+
+        long eightThreads = System.currentTimeMillis();
+        new ViolationStatisticAsyncGenerator(8).collectAndGenerateStatistic(pathToFolder, outputPath);
+        System.out.println("Eight threads: " + (System.currentTimeMillis() - eightThreads));
     }
 
     @Test
