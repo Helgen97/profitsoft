@@ -1,9 +1,6 @@
 package com.profitsoft.internship.task7;
 
-import com.profitsoft.internship.task7.exceptions.NoValueOrPropertyException;
-import com.profitsoft.internship.task7.exceptions.ParsingFieldException;
-import com.profitsoft.internship.task7.exceptions.SetterNotFoundException;
-import com.profitsoft.internship.task7.exceptions.WrongDateFormatException;
+import com.profitsoft.internship.task7.exceptions.*;
 import com.profitsoft.internship.task7.testClasses.*;
 import org.junit.Test;
 
@@ -43,6 +40,21 @@ public class ClassCreatorTest {
         assertEquals(10, testClassWithComplexProperty.getProperty());
         assertEquals(Integer.valueOf(10), testClassWithComplexProperty.getInteger());
         assertEquals("parse", testClassWithComplexProperty.getString());
+    }
+
+    @Test
+    public void createClassFromPropertiesTest_inputClassIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> ClassCreator.createClassFromProperties(null, pathToProperties));
+    }
+
+    @Test
+    public void createClassFromPropertiesTest_inputPathIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> ClassCreator.createClassFromProperties(TestClassWithPrivateDefaultConstructor.class, null));
+    }
+
+    @Test
+    public void createClassFromPropertiesTest_inputPathIsWrong() {
+        assertThrows(ReadingFileException.class, () -> ClassCreator.createClassFromProperties(TestClassWithPrivateDefaultConstructor.class, Path.of("/pathDoesntExist")));
     }
 
     @Test

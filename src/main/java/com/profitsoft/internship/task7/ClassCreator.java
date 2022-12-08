@@ -1,10 +1,7 @@
 package com.profitsoft.internship.task7;
 
 import com.profitsoft.internship.task7.annotation.Property;
-import com.profitsoft.internship.task7.exceptions.NoValueOrPropertyException;
-import com.profitsoft.internship.task7.exceptions.ParsingFieldException;
-import com.profitsoft.internship.task7.exceptions.SetterNotFoundException;
-import com.profitsoft.internship.task7.exceptions.WrongDateFormatException;
+import com.profitsoft.internship.task7.exceptions.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -55,6 +52,10 @@ public class ClassCreator {
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy HH:mm";
 
     public static <T> T createClassFromProperties(Class<T> cls, Path propertiesPath) {
+        if(cls == null || propertiesPath == null) {
+            throw new IllegalArgumentException("Null arguments. Please pull valid arguments.");
+        }
+
         readPropertiesToMap(propertiesPath);
 
         T instance = createInstance(cls);
@@ -68,12 +69,12 @@ public class ClassCreator {
         for (Field field : cls.getDeclaredFields()) {
             String fieldName = field.getName();
             String setterMethodName = getSetterMethodName(fieldName);
-            Object parsedValue = getParsedValueDependingOnAnnotation(field, fieldName);
+            Object parsedValue = parseValueDependingOnAnnotation(field, fieldName);
             invokeMethod(instance, cls, field, setterMethodName, parsedValue);
         }
     }
 
-    private static Object getParsedValueDependingOnAnnotation(Field field, String fieldName) {
+    private static Object parseValueDependingOnAnnotation(Field field, String fieldName) {
         if (!field.isAnnotationPresent(Property.class)) {
             return getParsedValue(field.getType(), properties.get(fieldName), DEFAULT_DATE_FORMAT);
         } else {
@@ -155,7 +156,7 @@ public class ClassCreator {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReadingFileException("Cannot read file from path.", e);
         }
     }
 }
