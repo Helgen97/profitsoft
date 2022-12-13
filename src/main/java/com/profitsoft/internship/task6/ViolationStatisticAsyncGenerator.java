@@ -46,11 +46,11 @@ public class ViolationStatisticAsyncGenerator {
             asyncReadingFile(paths);
 
             executorsService.shutdown();
-            if(executorsService.awaitTermination(5L, TimeUnit.SECONDS)) {
+            if (executorsService.awaitTermination(5L, TimeUnit.SECONDS)) {
                 sortMapByFineAmount();
                 ViolationStatisticJsonWriter.createJson(statistic, outputPath);
             }
-        } catch (IOException | InterruptedException  e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
