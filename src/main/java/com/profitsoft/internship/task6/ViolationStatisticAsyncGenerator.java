@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,19 +43,24 @@ public class ViolationStatisticAsyncGenerator {
             throw new IllegalArgumentException("Bad arguments! Please verify paths arguments!");
         }
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFolder))) {
-            paths
-                    .filter(file -> !Files.isDirectory(file))
-                    .filter(file -> file.toString().endsWith(".xml"))
-                    .parallel()
-                    .forEach(file -> CompletableFuture.runAsync(() -> mergeMap(xmlParser.parseViolationXML(file)), executorsService));
+            asyncReadingFile(paths);
 
-            executorsService.close();
-
-            sortMapByFineAmount();
-            ViolationStatisticJsonWriter.createJson(statistic, outputPath);
-        } catch (IOException e) {
+            executorsService.shutdown();
+            if(executorsService.awaitTermination(5L, TimeUnit.SECONDS)) {
+                sortMapByFineAmount();
+                ViolationStatisticJsonWriter.createJson(statistic, outputPath);
+            }
+        } catch (IOException | InterruptedException  e) {
             e.printStackTrace();
         }
+    }
+
+    private void asyncReadingFile(Stream<Path> paths) {
+        paths
+                .filter(file -> !Files.isDirectory(file))
+                .filter(file -> file.toString().endsWith(".xml"))
+                .parallel()
+                .forEach(file -> CompletableFuture.runAsync(() -> mergeMap(xmlParser.parseViolationXML(file)), executorsService));
     }
 
     private void mergeMap(Map<ViolationType, Double> newStatistic) {

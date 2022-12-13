@@ -52,7 +52,7 @@ public class ClassCreator {
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy HH:mm";
 
     public static <T> T createClassFromProperties(Class<T> cls, Path propertiesPath) {
-        if(cls == null || propertiesPath == null) {
+        if (cls == null || propertiesPath == null) {
             throw new IllegalArgumentException("Null arguments. Please pull valid arguments.");
         }
 

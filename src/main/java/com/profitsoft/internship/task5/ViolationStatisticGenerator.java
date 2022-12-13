@@ -49,25 +49,28 @@ public class ViolationStatisticGenerator {
             throw new IllegalArgumentException("Bad arguments! Please verify paths arguments!");
         }
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFolder))) {
-            paths
-                    .filter(file -> !Files.isDirectory(file))
-                    .forEach((file) -> {
-                        if (file.toString().endsWith(".xml")) {
-                            if (firstFileType.isEmpty()) firstFileType = "xml";
-                            xmlParser.parseViolationXML(file);
-                        }
-                        if (file.toString().endsWith(".json")) {
-                            if (firstFileType.isEmpty()) firstFileType = "json";
-                            jsonParser.parseViolationJson(file);
-                        }
-                    });
-
+            readingFiles(paths);
             combineMapFromParsers();
             sortMapByFineAmount();
             generateStatistic(outputPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void readingFiles(Stream<Path> paths) {
+        paths
+                .filter(file -> !Files.isDirectory(file))
+                .forEach((file) -> {
+                    if (file.toString().endsWith(".xml")) {
+                        if (firstFileType.isEmpty()) firstFileType = "xml";
+                        xmlParser.parseViolationXML(file);
+                    }
+                    if (file.toString().endsWith(".json")) {
+                        if (firstFileType.isEmpty()) firstFileType = "json";
+                        jsonParser.parseViolationJson(file);
+                    }
+                });
     }
 
     private void combineMapFromParsers() {
